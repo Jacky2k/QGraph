@@ -1,0 +1,44 @@
+QGraph is a class to plot graphs in a QWidget.
+QGraph is based on a QWidget and can thus be used like a QWidget.
+There are several functions to add data to the graph. It is posible
+to add more than one line at the same time. As you also have to
+provide the x coordinates of your data it is possible to use different
+x coordinate sets for different lines.
+As plot methods you can choose between lines, stems and bars.
+
+==License==
+QGraph is released under the LGPL v3. See LICENSE file for details.
+
+==Compiling==
+It is not required to compile the class, just integrate it in your
+project like any other class. If you want to build the example project
+follow the instructrions below:
+Linux:
+  $ qmake
+  $ make
+Windows/Mac/Linux:
+  Open the .pro file in QtCreator and press the build button
+
+==Known Bugs==
+* Zooming too deep in will cause the application to crash. 
+  I don't know yet how to fix this.
+* Zooming too far out will cause the graph to become blank.
+  I don't know yet how to fix this.
+* When zooming to deep in there will be graphics errors. For example
+  a line changes its gradient, dissappears or looks like stairs.
+  For some reasons this happens only on Mac and Windows. Linux is not
+  affected.
+
+==Missing features / Things to do==
+* Add a setData function to plot a histogram
+* Add setData functions to pass the data as double pointer
+* Add more comfortable setData functions. For example seperate
+  functions to add lines, stems and bars.
+* Add support for OpenGL
+* Add a legend to describe the graphs
+* Write a documentation
+* Fix the bugs ;)
+
+==Change log==
+22.07.2012  0.1     Initial release
+
