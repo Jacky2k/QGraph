@@ -5,6 +5,8 @@ to add more than one line at the same time. As you also have to
 provide the x coordinates of your data it is possible to use different
 x coordinate sets for different lines.
 As plot methods you can choose between lines, stems and bars.
+If you want to use QGraph, simply copy the files QGraph.h and QGraph.cpp
+in your project and include QGraph.h.
 
 ==Contact==
 My name is Fabian Schwartau. Contact me per:
