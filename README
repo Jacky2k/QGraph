@@ -42,6 +42,10 @@ Windows/Mac/Linux:
   affected.
 
 ==Missing features / Things to do==
+* Make setData functions more efficient by just updating the data of
+  a trace instead of redrawing the whole scene. This is probably the
+  next thing I will implement as the graph consumes a lot of CPU at
+  the moment when you are updating frequently.
 * Add a setData function to plot a histogram
 * Add setData functions to pass the data as double pointer
 * Add more comfortable setData functions. For example seperate
