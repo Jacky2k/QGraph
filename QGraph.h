@@ -1,5 +1,5 @@
 /*
-    (c) Copyright 2012 by Fabian Schwartau
+    (c) Copyright 2012-2013 by Fabian Schwartau
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -61,9 +61,9 @@ public:
     void setAntializing(bool antializing);
     void setGrid(bool grid);
     void clearData();
-    void setData(QVector<double> xData, QVector<double> yData, GraphStyle style = Line, double barWidth = 0.9, QPen pen = QPen(Qt::black), QBrush brush = QBrush(Qt::transparent));
+    void setData(QVector<double> xData, QVector<double> yData, GraphStyle style = Line, double barWidth = 0.9, QPen pen = QPen(Qt::black,0), QBrush brush = QBrush(Qt::transparent));
     void setData(QVector< QVector<double> > xData, QVector< QVector<double> > yData, QVector<GraphStyle> styles = QVector<GraphStyle>(), QVector<double> barWidths = QVector<double>(), QVector<QPen> pens = QVector<QPen>(), QVector<QBrush> brushes = QVector<QBrush>());
-    void appendData(QVector<double> xData, QVector<double> yData, GraphStyle style = Line, double barWidth = 0.9, QPen pen = QPen(Qt::black), QBrush brush = QBrush(Qt::transparent));
+    void appendData(QVector<double> xData, QVector<double> yData, GraphStyle style = Line, double barWidth = 0.9, QPen pen = QPen(Qt::black,0), QBrush brush = QBrush(Qt::transparent));
 
     void useLimit(bool limitedX, bool limitedY);
     void useZoomLimit(bool zoomLimit);

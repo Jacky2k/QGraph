@@ -1,5 +1,5 @@
 /*
-    (c) Copyright 2012 by Fabian Schwartau
+    (c) Copyright 2012-2013 by Fabian Schwartau
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
 */
 
 #include "MainWindow.h"
-#include "ui_MainWindow.h"
 
 #include <QMessageBox>
 #include <cmath>
@@ -41,17 +40,17 @@ MainWindow::MainWindow(QWidget *parent) :
     y.clear();
     for(int i=0; i<x.size(); i++)
         y<<x[i]*x[i]+0.3;
-    graph->appendData(x, y, QGraph::Line, 0.9, QPen(Qt::red), QBrush(Qt::black));
+    graph->appendData(x, y, QGraph::Line, 0.9, QPen(Qt::red,0), QBrush(Qt::black));
 
     y.clear();
     for(int i=0; i<x.size(); i++)
         y<<x[i]*x[i]*x[i]*x[i]+0.2;
-    graph->appendData(x, y, QGraph::Stem, 0.9, QPen(Qt::green), QBrush(Qt::black));
+    graph->appendData(x, y, QGraph::Stem, 0.9, QPen(Qt::green,0), QBrush(Qt::black));
 
     y.clear();
     for(int i=0; i<x.size(); i++)
         y<<x[i]*x[i]*x[i]*x[i]*x[i]*x[i]+0.1;
-    graph->appendData(x, y, QGraph::Bar, 0.8, QPen(Qt::blue), QBrush(Qt::transparent));
+    graph->appendData(x, y, QGraph::Bar, 0.8, QPen(Qt::blue,0), QBrush(Qt::transparent));
 
     graph->update();
     graph->show();

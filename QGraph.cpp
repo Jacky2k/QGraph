@@ -1,5 +1,5 @@
 /*
-    (c) Copyright 2012 by Fabian Schwartau
+    (c) Copyright 2012-2013 by Fabian Schwartau
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@
 #include <iostream>
 #include <cmath>
 #include <QFileDialog>
-#include <QSvgGenerator>
 #include <QFontMetrics>
 #include <algorithm>
 #include <limits>
@@ -168,7 +167,7 @@ void QGraph::setData(QVector< QVector<double> > xData, QVector< QVector<double> 
             line.barWidth = 0.9;
 
         if(pens.size() != xData.size())
-            line.pen = QPen(Qt::black);
+            line.pen = QPen(Qt::black, 0);
         else
             line.pen = pens[set];
 
@@ -179,8 +178,9 @@ void QGraph::setData(QVector< QVector<double> > xData, QVector< QVector<double> 
     }
     if(autoRefresh)
     {
-        dataMinMax();
-        insertLines();
+        //dataMinMax();
+        //insertLines();
+        refresh();
     }
 }
 
@@ -196,8 +196,9 @@ void QGraph::appendData(QVector<double> xData, QVector<double> yData, GraphStyle
     lines.push_back(line);
     if(autoRefresh)
     {
-        dataMinMax();
-        insertLines();
+        //dataMinMax();
+        //insertLines();
+        refresh();
     }
 }
 
@@ -214,8 +215,9 @@ void QGraph::useZoomLimit(bool zoomLimit)
     this->zoomLimit =  zoomLimit;
     if(autoRefresh)
     {
-        dataMinMax();
-        insertLines();
+        //dataMinMax();
+        //insertLines();
+        refresh();
     }
 }
 
@@ -226,8 +228,9 @@ void QGraph::limitX(double xmin, double xmax)
     dataMaxX = xmax;
     if(autoRefresh)
     {
-        dataMinMax();
-        insertLines();
+        //dataMinMax();
+        //insertLines();
+        refresh();
     }
 }
 
@@ -238,8 +241,9 @@ void QGraph::limitY(double ymin, double ymax)
     dataMaxY = ymax;
     if(autoRefresh)
     {
-        dataMinMax();
-        insertLines();
+        //dataMinMax();
+        //insertLines();
+        refresh();
     }
 }
 
@@ -466,7 +470,7 @@ void QGraph::repaint()
     // Draw the grid
     if(grid)
     {
-        painter.setPen(QPen(Qt::black, 1, Qt::DotLine));
+        painter.setPen(QPen(Qt::black, 0, Qt::DotLine));
         for(int i=0; i<xPoints.size(); i++)
         {
             painter.drawLine(src2dstX(xPoints[i]), dstRect.y(), src2dstX(xPoints[i]), dstRect.y()+dstRect.height());
@@ -475,7 +479,7 @@ void QGraph::repaint()
         {
             painter.drawLine(dstRect.x(), src2dstY(yPoints[i]), dstRect.x()+dstRect.width(), src2dstY(yPoints[i]));
         }
-        painter.setPen(QPen(Qt::black, Qt::SolidLine));
+        painter.setPen(QPen(Qt::black, 0, Qt::SolidLine));
     }
 
     // Draw the title
@@ -565,7 +569,7 @@ void QGraph::dataMinMax()
         dataMinX=0.0;
         dataMaxX=1.0;
     }
-    if(!limitedX)
+    if(!limitedY)
     {
         dataMinY=0.0;
         dataMaxY=1.0;
@@ -663,8 +667,12 @@ void QGraph::insertLines()
     repaint();
 }
 
+// FIXME: Not working for min == max!!!
 void QGraph::calcPoints(QVector<double>& points, double min, double max)
 {
+    points.clear();
+    if(max-min == 0)
+        return;
     double dxIdeal = (max-min)/4.0;
     double dx = exp(floor(log(dxIdeal)/log(10.0))*log(10.0));
     double diff = log(dxIdeal)/log(10.0)-floor(log(dxIdeal)/log(10.0));
@@ -675,7 +683,6 @@ void QGraph::calcPoints(QVector<double>& points, double min, double max)
 
     double start = ceil(min/dx);
     double end = floor(max/dx);
-    points.clear();
     for(double i = start; i<=end; i++)
         points.push_back(dx*i);
 }
@@ -832,7 +839,9 @@ void QGraph::keyPressEvent(QKeyEvent* event)
         dx = -1;
     else if(event->key() == Qt::Key_Right)
         dx = 1;
-    if(dx == 0 || !tracking)
+    else if(event->key() == Qt::Key_Escape)
+        tracking = false;
+    else
     {
         QWidget::keyPressEvent(event);
         return;
@@ -1057,7 +1066,7 @@ void QGraph::onMenuSavePicture()
         return;
     if(fileName.toLower().endsWith(".svg"))
     {
-        QSvgGenerator generator;
+        /*QSvgGenerator generator;
         generator.setFileName("bla.svg");
         generator.setSize(QSize(dstRect.width(), -dstRect.height()));
         generator.setViewBox(QRect(0, 0, dstRect.width(), -dstRect.height()));
@@ -1067,7 +1076,7 @@ void QGraph::onMenuSavePicture()
         QPainter painter;
         painter.begin(&generator);
         scene->render(&painter, QRect(0, 0, dstRect.width(), -dstRect.height()), srcRect, Qt::IgnoreAspectRatio);
-        painter.end();
+        painter.end();*/
     }
     else
     {
